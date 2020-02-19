@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: metrics-example
+  template:
+    metadata:
+      labels:
+        name: metrics-example
+    spec:
+      serviceAccountName: metrics-example
+      containers:
+        - name: metrics-example
+          # Replace this with the built image name
+          image: quay.io/jary/metrics-service
+          command:
+          - metrics-example
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "metrics-example"

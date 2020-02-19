@@ -1,0 +1,7 @@
+apiVersion: metrics.jary.io/v1
+kind: MetricsService
+metadata:
+  name: example-metricsservice
+spec:
+  # Add fields here
+  size: 3
